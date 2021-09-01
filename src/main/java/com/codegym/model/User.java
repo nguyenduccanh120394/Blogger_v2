@@ -11,81 +11,65 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.Instant;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "user" , uniqueConstraints = {
-        @UniqueConstraint(columnNames = {
-                "username"
-        }),
-        @UniqueConstraint(columnNames = {
-                "email"
-        })
-})
+@Table
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
-    @Size(min = 3, max = 50)
-    private String name;
-
-    @NotBlank
-    @Size(min = 3 , max = 50)
+    @Size( max = 50)
     private String username;
 
-    @NaturalId
-    @NotBlank
-    @Size(max = 50)
-    @Email
-    private String email;
-
     @JsonIgnore
     @NotBlank
-    @Size(min = 6 ,max = 100)
+
     private String password;
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles" ,
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+
+    //    @Size(max = 50)
+//    @Email
+    private String email;
+
+    @NotBlank
+    @Size(min = 9, max = 11)
+    private String phone;
+    @NotBlank
+    @Size(max = 50)
+    private  String fullname;
+    private String status;
+
+    @Size(max = 100)
+    private String address;
     @Lob
     private String avatar;
-    private String phone;
-    private String address;
-    @NotBlank
-    private int status;
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private Instant timeCreated;
-
-    public User(Long id, String name, String username, String email, String password, Set<Role> roles, String avatar, String phone, String address, int status, Instant timeCreated) {
-        this.id = id;
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-        this.avatar = avatar;
-        this.phone = phone;
-        this.address = address;
-        this.status = status;
-        this.timeCreated = timeCreated;
-    }
-
-    public User(String name, String username, String email, String password) {
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
+    @ManyToMany(fetch = FetchType.EAGER)
+    Set<Role> roles = new HashSet<>();
+    @OneToMany (fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "user")
+    @JsonIgnore
+    private Set<UpdateTime> SetupdateTimes= new HashSet<>();
 
     public User() {
+    }
+
+//    public User(String username, String fullname, String encode, String email, String phone, String address) {
+//
+//    }
+
+
+    public User(@NotBlank @Size(max = 50) String username, @NotBlank @Size(max = 50) String fullname, @NotBlank String password, @NotBlank String email, @NotBlank @Size(min = 9, max = 11) String phone, @NotBlank @Size(max = 100) String address) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+        this.fullname = fullname;
+        this.address = address;
     }
 
     public Long getId() {
@@ -96,28 +80,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {
@@ -128,20 +96,12 @@ public class User {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public String getEmail() {
+        return email;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhone() {
@@ -152,6 +112,22 @@ public class User {
         this.phone = phone;
     }
 
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -160,25 +136,30 @@ public class User {
         this.address = address;
     }
 
-    public int getStatus() {
-        return status;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
-    public Instant getTimeCreated() {
-        return timeCreated;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
-    public void setTimeCreated(Instant timeCreated) {
-        this.timeCreated = timeCreated;
+    public Set<UpdateTime> getSetupdateTimes() {
+        return SetupdateTimes;
     }
-    public String showStatus(){
-        String statusString="";
-        if(this.status==1) statusString="Activate";
-        if(this.status==2) statusString="Lock";
-        return statusString;
+
+    public void setSetupdateTimes(Set<UpdateTime> setupdateTimes) {
+        SetupdateTimes = setupdateTimes;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setAvatar() {
     }
 }

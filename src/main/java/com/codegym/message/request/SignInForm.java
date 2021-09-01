@@ -3,14 +3,17 @@ package com.codegym.message.request;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-public class LoginForm {
-    @NotBlank
-    @Size(min = 3, max = 60)
+public class SignInForm {
     private String username;
-
-    @NotBlank
-    @Size(min = 6, max = 40)
     private String password;
+
+    public SignInForm() {
+    }
+
+    public SignInForm(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     public String getUsername() {
         return username;

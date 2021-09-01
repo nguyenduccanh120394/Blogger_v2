@@ -6,33 +6,25 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 public class SignUpForm {
-    private Long id;
-
-    @NotBlank
-    @Size(min = 3, max = 50)
-    private String name;
-
-    @NotBlank
-    @Size(min = 3, max = 50)
     private String username;
-
-    @NotBlank
-    @Size(max = 60)
-    @Email
-    private String email;
-
-    private Set<String> role;
-
-    @NotBlank
-    @Size(min = 6, max = 40)
+    private String fullname;
     private String password;
+    private String email;
+    private String phone;
+    private String address;
+    private Set<String> roles;
 
-    public String getName() {
-        return name;
+    public SignUpForm() {
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public SignUpForm(String username, String fullname, String password, String email, String phone, String address, Set<String> roles) {
+        this.username = username;
+        this.fullname = fullname;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.roles = roles;
     }
 
     public String getUsername() {
@@ -43,12 +35,12 @@ public class SignUpForm {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getPassword() {
@@ -59,19 +51,35 @@ public class SignUpForm {
         this.password = password;
     }
 
-    public Set<String> getRole() {
-        return this.role;
+    public String getEmail() {
+        return email;
     }
 
-    public void setRole(Set<String> role) {
-        this.role = role;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Long getId() {
-        return id;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
     }
 }
