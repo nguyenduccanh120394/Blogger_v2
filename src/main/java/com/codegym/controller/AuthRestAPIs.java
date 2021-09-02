@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import com.codegym.service.user.*;
 import javax.validation.Valid;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import com.codegym.model.*;
@@ -62,47 +63,36 @@ public class AuthRestAPIs {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
-        if (userService.existsByUsername(signUpRequest.getUsername())) {
-            return new ResponseEntity<>(new ResponseMessage("Fail -> Username is already taken!"),
-                    HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpForm) {
+        if(userService.existsByUsername(signUpForm.getUsername())){
+            return new ResponseEntity<>(new ResponseMessage("nouser"), HttpStatus.OK);
         }
-
-        if (userService.existsByEmail(signUpRequest.getEmail())) {
-            return new ResponseEntity<>(new ResponseMessage("Fail -> Email is already in use!"),
-                    HttpStatus.BAD_REQUEST);
+        if(userService.existsByEmail(signUpForm.getEmail())){
+            return new ResponseEntity<>(new ResponseMessage("noemail"), HttpStatus.OK);
         }
-
-        // Creating user's account
-        User user = new User(signUpRequest.getName(), signUpRequest.getUsername(), signUpRequest.getEmail(),
-                passwordEncoder.encode(signUpRequest.getPassword()));
-
-        Set<String> strRoles = signUpRequest.getRole();
+        User user = new User(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(),passwordEncoder.encode(signUpForm.getPassword()));
+        Set<String> strRoles = signUpForm.getRoles();
         Set<Role> roles = new HashSet<>();
-        strRoles.forEach(role -> {
-            switch (role) {
+        strRoles.forEach(role ->{
+            switch (role){
                 case "admin":
-                    Role adminRole = roleService.findByName(RoleName.ADMIN)
-                            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
+                    Role adminRole = roleService.findByName(RoleName.ADMIN).orElseThrow(
+                            ()-> new RuntimeException("Role not found")
+                    );
                     roles.add(adminRole);
-
                     break;
                 case "pm":
-                    Role pmRole = roleService.findByName(RoleName.PM)
-                            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
+                    Role pmRole = roleService.findByName(RoleName.PM).orElseThrow( ()-> new RuntimeException("Role not found"));
                     roles.add(pmRole);
-
                     break;
                 default:
-                    Role userRole = roleService.findByName(RoleName.USER)
-                            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
+                    Role userRole = roleService.findByName(RoleName.USER).orElseThrow( ()-> new RuntimeException("Role not found"));
                     roles.add(userRole);
             }
         });
-
+        user.setTimeCreated(LocalDateTime.now());
         user.setRoles(roles);
         userService.save(user);
-
-        return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
     }
 }
