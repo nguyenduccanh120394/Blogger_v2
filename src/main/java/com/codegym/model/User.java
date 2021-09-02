@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Date;
 import java.util.HashSet;
@@ -54,6 +55,7 @@ public class User {
     @OneToMany (fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "user")
     @JsonIgnore
     private Set<UpdateTime> SetupdateTimes= new HashSet<>();
+ private Timestamp timecreate;
 
     public User() {
     }
@@ -70,6 +72,21 @@ public class User {
         this.phone = phone;
         this.fullname = fullname;
         this.address = address;
+    }
+
+    public User(Long id, @NotBlank @Size(max = 50) String username, @NotBlank String password, String email, @NotBlank @Size(min = 9, max = 11) String phone, @NotBlank @Size(max = 50) String fullname, String status, @Size(max = 100) String address, String avatar, Set<Role> roles, Set<UpdateTime> setupdateTimes, Timestamp timecreate) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+        this.fullname = fullname;
+        this.status = status;
+        this.address = address;
+        this.avatar = avatar;
+        this.roles = roles;
+        SetupdateTimes = setupdateTimes;
+        this.timecreate = timecreate;
     }
 
     public Long getId() {
@@ -144,6 +161,10 @@ public class User {
         this.avatar = avatar;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
@@ -156,8 +177,12 @@ public class User {
         SetupdateTimes = setupdateTimes;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Timestamp getTimecreate() {
+        return timecreate;
+    }
+
+    public void setTimecreate(Timestamp timecreate) {
+        this.timecreate = timecreate;
     }
 
     public void setAvatar() {

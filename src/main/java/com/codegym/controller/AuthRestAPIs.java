@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 import com.codegym.model.*;
@@ -61,10 +62,12 @@ public class AuthRestAPIs {
         Set<Role> roles = new HashSet<>();
 
         Role roleUser = new Role();
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         roleUser.setId(1L);
         roleUser.setName(RoleName.USER);
         roles.add(roleUser);
         user.setRoles(roles);
+        user.setTimecreate(timestamp);
         user.setAvatar();
         userService.save(user);
         return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
