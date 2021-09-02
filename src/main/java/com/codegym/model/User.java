@@ -11,6 +11,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -62,9 +63,9 @@ public class User {
     private int status;
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    private Instant timeCreated;
+    private LocalDateTime timeCreated;
 
-    public User(Long id, String name, String username, String email, String password, Set<Role> roles, String avatar, String phone, String address, int status, Instant timeCreated) {
+    public User(Long id, String name, String username, String email, String password, Set<Role> roles, String avatar, String phone, String address, int status, LocalDateTime timeCreated) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -168,11 +169,11 @@ public class User {
         this.status = status;
     }
 
-    public Instant getTimeCreated() {
+    public LocalDateTime getTimeCreated() {
         return timeCreated;
     }
 
-    public void setTimeCreated(Instant timeCreated) {
+    public void setTimeCreated(LocalDateTime timeCreated) {
         this.timeCreated = timeCreated;
     }
     public String showStatus(){
