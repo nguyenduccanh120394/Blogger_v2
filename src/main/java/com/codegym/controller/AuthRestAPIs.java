@@ -22,6 +22,7 @@ import javax.validation.Valid;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import com.codegym.model.*;
 import com.codegym.service.role.*;
@@ -55,7 +56,10 @@ public class AuthRestAPIs {
 
         String jwt = jwtProvider.generateJwtToken(authentication);
         UserPrinciple userDetails = (UserPrinciple) authentication.getPrincipal();
-
+        Optional<User> user = userService.findById(userDetails.getId());
+        if (user.get().getStatus() == 2){
+            return new ResponseEntity<>(new ResponseMessage("Your account has been lock !"),HttpStatus.OK);
+        }
         return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(),
                 userDetails.getId() , userDetails.getName(), userDetails.getEmail(), userDetails.getAvatar() ,
                 userDetails.getAuthorities()
@@ -90,6 +94,7 @@ public class AuthRestAPIs {
                     roles.add(userRole);
             }
         });
+        user.setStatus(1);
         user.setTimeCreated(LocalDateTime.now());
         user.setRoles(roles);
         userService.save(user);
