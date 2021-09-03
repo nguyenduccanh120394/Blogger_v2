@@ -26,6 +26,11 @@ public class HashtagController {
         Optional<Hashtag> hashtag = hashtagService.findById(id);
         return new ResponseEntity<>(hashtag,HttpStatus.OK);
     }
+    @PostMapping("")
+    public ResponseEntity<Hashtag> create(@RequestBody Hashtag hashtag){
+        hashtagService.save(hashtag);
+        return new ResponseEntity<>(hashtag,HttpStatus.OK);
+    }
     @PutMapping("/{id}")
     public ResponseEntity<Hashtag>edit(@PathVariable Long id, @RequestBody Hashtag hashtag){
         Optional<Hashtag>currentHashtag= hashtagService.findById(id);
