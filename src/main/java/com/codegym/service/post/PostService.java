@@ -31,4 +31,9 @@ public class PostService implements IPostService {
     public void remove(Long id) {
         postRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<Post> findAllByTitle(String title) {
+        return postRepository.findAllByTitleContaining(title);
+    }
 }

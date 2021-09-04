@@ -44,13 +44,12 @@ public class User {
     @Email
     private String email;
 
-    @JsonIgnore
+//    @JsonIgnore
     @NotBlank
     @Size(min = 6 ,max = 100)
     private String password;
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles" ,
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -59,10 +58,7 @@ public class User {
     private String avatar;
     private String phone;
     private String address;
-    @NotBlank
     private int status;
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
     private LocalDateTime timeCreated;
 
     public User(Long id, String name, String username, String email, String password, Set<Role> roles, String avatar, String phone, String address, int status, LocalDateTime timeCreated) {
@@ -79,7 +75,17 @@ public class User {
         this.timeCreated = timeCreated;
     }
 
-    public User(String name, String username, String email, String password) {
+    public User( @NotBlank
+                 @Size(min = 3, max = 50)String name,
+                 @NotBlank
+                 @Size(min = 3 , max = 50)String username,
+                 @NotBlank
+                 @Size(max = 50)
+                 @Email
+                 String email,
+                 @NotBlank
+                 @Size(min = 6 ,max = 100)
+                 String password) {
         this.name = name;
         this.username = username;
         this.email = email;

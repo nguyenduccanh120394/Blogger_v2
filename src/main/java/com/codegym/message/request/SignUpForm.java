@@ -3,6 +3,7 @@ package com.codegym.message.request;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Set;
 
 public class SignUpForm {
@@ -21,11 +22,22 @@ public class SignUpForm {
     @Email
     private String email;
 
-    private Set<String> role;
+    private Set<String> roles = new HashSet<>();
 
     @NotBlank
     @Size(min = 6, max = 40)
     private String password;
+
+    public SignUpForm() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -51,27 +63,19 @@ public class SignUpForm {
         this.email = email;
     }
 
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Set<String> getRole() {
-        return this.role;
-    }
-
-    public void setRole(Set<String> role) {
-        this.role = role;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

@@ -43,6 +43,11 @@ public class PostController {
         return new ResponseEntity<>(postService.save(post), HttpStatus.OK);
     }
 
+    @GetMapping("/search/{title}")
+    public ResponseEntity<Iterable<Post>> findByTitle(@PathVariable String title) {
+        return new ResponseEntity<>(postService.findAllByTitle(title),HttpStatus.OK);
+    }
+
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)  // Nếu validate fail thì trả về 400
     public ResponseEntity handleBindException(BindException e) {
@@ -50,6 +55,6 @@ public class PostController {
         String errorMessage = "Request không hợp lệ";
         if (e.getBindingResult().hasErrors())
             e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
-        return new ResponseEntity(errorMessage,HttpStatus.OK) ;
+        return new ResponseEntity(errorMessage, HttpStatus.OK);
     }
 }

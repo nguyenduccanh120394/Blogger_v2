@@ -19,11 +19,13 @@ public class Post {
     private String status;
     @ManyToOne
     private User user;
+    @ManyToOne
+    private Hashtag hashtag;
 
     public Post() {
     }
 
-    public Post(Long id, String title, Date date, String content, String image, String description, String status, User user) {
+    public Post(Long id, String title, Date date, String content, String image, String description, String status, User user, Hashtag hashtag) {
         this.id = id;
         this.title = title;
         this.date = date;
@@ -32,9 +34,10 @@ public class Post {
         this.description = description;
         this.status = status;
         this.user = user;
+        this.hashtag = hashtag;
     }
 
-    public Post(String title, Date date, String content, String image, String description, String status, User user) {
+    public Post(String title, Date date, String content, String image, String description, String status, User user, Hashtag hashtag) {
         this.title = title;
         this.date = date;
         this.content = content;
@@ -42,10 +45,19 @@ public class Post {
         this.description = description;
         this.status = status;
         this.user = user;
+        this.hashtag = hashtag;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public Hashtag getHashtag() {
+        return hashtag;
+    }
+
+    public void setHashtag(Hashtag hashtag) {
+        this.hashtag = hashtag;
     }
 
     public void setId(Long id) {
