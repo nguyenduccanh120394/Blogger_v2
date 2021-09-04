@@ -1,7 +1,7 @@
 package com.codegym.model;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @Entity
@@ -9,8 +9,10 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty(message = "Thiếu title")
     private String title;
     private Date date;
+    @NotEmpty(message = "Thiếu content")
     private String content;
     private String image;
     private String description;
