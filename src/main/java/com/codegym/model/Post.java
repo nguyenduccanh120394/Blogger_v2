@@ -2,6 +2,7 @@ package com.codegym.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -17,8 +18,10 @@ public class Post {
     private String image;
     private String description;
     private String status;
+    @NotNull
     @ManyToOne
     private User user;
+    @NotNull
     @ManyToOne
     private Hashtag hashtag;
 
@@ -46,6 +49,16 @@ public class Post {
         this.status = status;
         this.user = user;
         this.hashtag = hashtag;
+    }
+
+    public Post(String title, Date date, String content, String image, String description, String status, User user) {
+        this.title = title;
+        this.date = date;
+        this.content = content;
+        this.image = image;
+        this.description = description;
+        this.status = status;
+        this.user = user;
     }
 
     public Long getId() {

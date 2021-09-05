@@ -22,6 +22,18 @@ public class PostController {
         return new ResponseEntity<>(postService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/public")
+    public ResponseEntity<Iterable<Post>> findAllByStatus() {
+        return new ResponseEntity<>(postService.findAllByStatus(), HttpStatus.OK);
+    }
+
+    // tìm post của user khác chỉ trả về public
+    @GetMapping("/search/user/{id}")
+    public ResponseEntity<Iterable<Post>> findAllByOtherUser(@PathVariable Long id) {
+        return new ResponseEntity<>(postService.findByOtherUser(id), HttpStatus.OK);
+    }
+
+
     @PostMapping("/create")
     public ResponseEntity<Post> create(@RequestBody @Valid Post post) {
         return new ResponseEntity<>(postService.save(post), HttpStatus.OK);
@@ -45,7 +57,23 @@ public class PostController {
 
     @GetMapping("/search/{title}")
     public ResponseEntity<Iterable<Post>> findByTitle(@PathVariable String title) {
-        return new ResponseEntity<>(postService.findAllByTitle(title),HttpStatus.OK);
+        return new ResponseEntity<>(postService.findAllByTitle(title), HttpStatus.OK);
+    }
+
+    // tìm post của user trả về cả public và private
+    @GetMapping("/user/{id}")
+    public ResponseEntity<Iterable<Post>> findAllByIdUser(@PathVariable Long id) {
+        return new ResponseEntity<>(postService.findAllByIdUser(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/search/hashtag/{id}")
+    public ResponseEntity<Iterable<Post>> findAllByHashtag(@PathVariable Long id) {
+        return new ResponseEntity<>(postService.findAllByHashtagId(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/search/date/{top}")
+    public ResponseEntity<Iterable<Post>> findTopDate(@PathVariable Long top) {
+        return new ResponseEntity<>(postService.findTopByDate(top), HttpStatus.OK);
     }
 
     @ExceptionHandler(BindException.class)
