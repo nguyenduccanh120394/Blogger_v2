@@ -4,4 +4,10 @@ import com.codegym.model.Post;
 import com.codegym.service.IGeneralService;
 
 public interface IPostService extends IGeneralService<Post> {
+    Iterable<Post>findAllByStatus();
+    Iterable<Post>findAllByTitle(String title);
+    Iterable<Post>findAllByIdUser(Long id);
+    Iterable<Post>findAllByHashtagId(Long top);
+    Iterable<Post>findTopByDate(Long top);
+    Iterable<Post>findByOtherUser(Long id);
 }
