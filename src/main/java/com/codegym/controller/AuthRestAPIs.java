@@ -58,7 +58,7 @@ public class AuthRestAPIs {
         UserPrinciple userDetails = (UserPrinciple) authentication.getPrincipal();
         Optional<User> user = userService.findById(userDetails.getId());
         if (user.get().getStatus() == 2){
-            return new ResponseEntity<>(new ResponseMessage("Your account has been lock !"),HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseMessage("Your account has been lock !"),HttpStatus.LOCKED);
         }
         return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(),
                 userDetails.getId() , userDetails.getName(), userDetails.getEmail(), userDetails.getAvatar() ,
@@ -96,6 +96,7 @@ public class AuthRestAPIs {
         });
         user.setStatus(1);
         user.setTimeCreated(LocalDateTime.now());
+        user.setAvatar("https://1.bp.blogspot.com/-lFwb3F9vQ0c/XxGC2Q1IEjI/AAAAAAAAqeQ/B8pXyPrUKaUsvGo4WHBK1Sm1vdHeWGnXQCLcBGAsYHQ/s1600/Avatar-mac-dinh%2B%25284%2529.jpg");
         user.setRoles(roles);
         userService.save(user);
         return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
