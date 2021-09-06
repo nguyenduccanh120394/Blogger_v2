@@ -33,8 +33,6 @@ public class PostController {
         return new ResponseEntity<>(postService.findByOtherUser(id), HttpStatus.OK);
     }
 
-
-
     @PostMapping("/create")
     public ResponseEntity<Post> create(@RequestBody @Valid Post post) {
         return new ResponseEntity<>(postService.save(post), HttpStatus.OK);

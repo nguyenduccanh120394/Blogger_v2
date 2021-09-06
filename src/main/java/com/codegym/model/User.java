@@ -1,7 +1,10 @@
 package com.codegym.model;
 
+
+import com.codegym.model.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.NaturalId;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
