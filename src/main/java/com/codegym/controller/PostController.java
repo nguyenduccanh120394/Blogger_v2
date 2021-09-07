@@ -74,6 +74,11 @@ public class PostController {
     public ResponseEntity<Iterable<Post>> findTopDate(@PathVariable Long top) {
         return new ResponseEntity<>(postService.findTopByDate(top), HttpStatus.OK);
     }
+    @GetMapping("/search/{id}/{title}")
+    public ResponseEntity<Iterable<Post>> findMyPostByTitle(@PathVariable Long id,@PathVariable String title) {
+        title = "%" + title + "%";
+        return new ResponseEntity<>(postService.findMyPostByTitle(id, title), HttpStatus.OK);
+    }
 
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)  // Nếu validate fail thì trả về 400
