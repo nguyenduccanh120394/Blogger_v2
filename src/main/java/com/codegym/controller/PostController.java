@@ -1,7 +1,9 @@
 package com.codegym.controller;
 
+import com.codegym.message.response.ResponseMessage;
 import com.codegym.model.Post;
 import com.codegym.service.post.IPostService;
+import com.codegym.service.post.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,13 +11,14 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/posts")
-public class PostController {
+public class PostController{
     @Autowired
-    IPostService postService;
+    PostService postService;
 
     @GetMapping()
     public ResponseEntity<Iterable<Post>> findAll() {
@@ -39,14 +42,22 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Post> get(@PathVariable Long id) {
-        return new ResponseEntity<>(postService.findById(id).get(), HttpStatus.OK);
+    public ResponseEntity<?> get(@PathVariable Long id) {
+        Optional<Post> post = postService.findById(id);
+        if (!post.isPresent()){
+            return new ResponseEntity<>(new ResponseMessage("Không tìm thấy bài post"),HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Post> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        Optional<Post> post = postService.findById(id);
+        if (!post.isPresent()){
+            return new ResponseEntity<>(new ResponseMessage("Không tìm thấy bài post"),HttpStatus.NOT_FOUND);
+        }
         postService.remove(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseMessage("delete done"),HttpStatus.OK);
     }
 
     @PutMapping("/edit")
