@@ -24,6 +24,7 @@ public class AdminController {
         Optional<User> user = userService.findById(id);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> edit(@PathVariable Long id, @RequestBody User user){
         Optional<User>currentUser = userService.findById(id);
