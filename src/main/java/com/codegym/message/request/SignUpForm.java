@@ -28,7 +28,17 @@ public class SignUpForm {
     @Size(min = 6, max = 40)
     private String password;
 
+
     public SignUpForm() {
+    }
+
+    public SignUpForm(@NotBlank @Size(min = 3, max = 50) String name, @NotBlank @Size(min = 3, max = 50) String username,@NotBlank @Size(max = 60) @Email String email, @NotBlank @Size(min = 6, max = 40) String password) {
+        this.name = name;
+        this.username = username;
+
+        this.email = email;
+        this.password = password;
+
     }
 
     public Long getId() {
@@ -55,6 +65,8 @@ public class SignUpForm {
         this.username = username;
     }
 
+
+
     public String getEmail() {
         return email;
     }
@@ -78,4 +90,6 @@ public class SignUpForm {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 }
