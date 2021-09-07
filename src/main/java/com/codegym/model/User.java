@@ -41,7 +41,7 @@ public class User {
     @NaturalId
     @NotBlank
     @Size(max = 50)
-    @Email
+    @Email()
     private String email;
 
 //    @JsonIgnore
