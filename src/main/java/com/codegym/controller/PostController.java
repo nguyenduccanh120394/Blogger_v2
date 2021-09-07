@@ -67,6 +67,7 @@ public class PostController{
 
     @GetMapping("/search/{title}")
     public ResponseEntity<Iterable<Post>> findByTitle(@PathVariable String title) {
+
         return new ResponseEntity<>(postService.findAllByTitle(title), HttpStatus.OK);
     }
 

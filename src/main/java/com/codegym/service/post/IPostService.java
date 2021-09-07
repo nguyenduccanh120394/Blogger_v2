@@ -9,5 +9,8 @@ public interface IPostService extends IGeneralService<Post> {
     Iterable<Post>findAllByIdUser(Long id);
     Iterable<Post>findAllByHashtagId(Long top);
     Iterable<Post>findTopByDate(Long top);
+
+    Iterable<Post>findAllByTitleContaining(String title);
+
     Iterable<Post>findByOtherUser(Long id);
 }

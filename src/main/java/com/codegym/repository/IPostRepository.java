@@ -10,7 +10,7 @@ public interface IPostRepository extends PagingAndSortingRepository<Post, Long> 
 
     @Query("select p from Post p where p.status = 'public'")
     Iterable<Post>findAllByStatus();
-    @Query("select p from Post p where p.title = : title ")
+    @Query(value = "select * from post where post.user_id =:id and post.title like  :title order by post.date desc ", nativeQuery = true)
     Iterable<Post>findAllByTitleContaining(String title);
 
     @Query("select p from Post p where p.user.id =:id")
