@@ -62,4 +62,15 @@ public class PostService implements IPostService {
     public Iterable<Post> findByOtherUser(Long id) {
         return postRepository.findAllByIdUserOther(id);
     }
+
+    @Override
+    public Iterable<Post> findMyPostByTitle(Long id, String title) {
+        return postRepository.findAllMyPostByTitle(id, title);
+    }
+
+    @Override
+    public Iterable<Post> findMyPostByHashtag(Long userId, Long hashtagId) {
+        return postRepository.findMyPostByHashtag(userId,hashtagId);
+    }
+
 }
