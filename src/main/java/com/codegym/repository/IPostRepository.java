@@ -27,6 +27,9 @@ public interface IPostRepository extends PagingAndSortingRepository<Post, Long> 
     @Query(value = "select * from post order by post.date desc limit :top" , nativeQuery = true)
     Iterable<Post>findTopByDate(Long top);
 
+    @Query("select p from Post p where p.user.id =:userId and p.hashtag.id =:hashtagId order by p.date desc")
+    Iterable<Post>findMyPostByHashtag(Long userId, Long hashtagId);
+
 
 
 

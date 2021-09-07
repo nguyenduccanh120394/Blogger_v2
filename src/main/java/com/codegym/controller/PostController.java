@@ -64,6 +64,10 @@ public class PostController {
     public ResponseEntity<Iterable<Post>> findAllByIdUser(@PathVariable Long id) {
         return new ResponseEntity<>(postService.findAllByIdUser(id), HttpStatus.OK);
     }
+    @GetMapping("/user/{userId}/{hashtagId}")
+    public ResponseEntity<Iterable<Post>> findMyPostByHashtag(@PathVariable Long userId, @PathVariable Long hashtagId){
+        return new ResponseEntity<>(postService.findMyPostByHashtag(userId, hashtagId),HttpStatus.OK);
+    }
 
     @GetMapping("/search/hashtag/{id}")
     public ResponseEntity<Iterable<Post>> findAllByHashtag(@PathVariable Long id) {
