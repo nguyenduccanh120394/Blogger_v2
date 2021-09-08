@@ -76,6 +76,10 @@ public class PostController{
     public ResponseEntity<Iterable<Post>> findAllByIdUser(@PathVariable Long id) {
         return new ResponseEntity<>(postService.findAllByIdUser(id), HttpStatus.OK);
     }
+    @GetMapping("/user/{userId}/{hashtagId}")
+    public ResponseEntity<Iterable<Post>> findMyPostByHashtag(@PathVariable Long userId, @PathVariable Long hashtagId){
+        return new ResponseEntity<>(postService.findMyPostByHashtag(userId, hashtagId),HttpStatus.OK);
+    }
 
     @GetMapping("/search/hashtag/{id}")
     public ResponseEntity<Iterable<Post>> findAllByHashtag(@PathVariable Long id) {
@@ -85,6 +89,11 @@ public class PostController{
     @GetMapping("/search/date/{top}")
     public ResponseEntity<Iterable<Post>> findTopDate(@PathVariable Long top) {
         return new ResponseEntity<>(postService.findTopByDate(top), HttpStatus.OK);
+    }
+    @GetMapping("/search/{id}/{title}")
+    public ResponseEntity<Iterable<Post>> findMyPostByTitle(@PathVariable Long id,@PathVariable String title) {
+        title = "%" + title + "%";
+        return new ResponseEntity<>(postService.findMyPostByTitle(id, title), HttpStatus.OK);
     }
 
     @ExceptionHandler(BindException.class)
@@ -96,4 +105,6 @@ public class PostController{
             e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
         return new ResponseEntity(errorMessage, HttpStatus.OK);
     }
+
+
 }
