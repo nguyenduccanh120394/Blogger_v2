@@ -93,4 +93,6 @@ public class PostController {
             e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
         return new ResponseEntity(errorMessage, HttpStatus.OK);
     }
+
+
 }

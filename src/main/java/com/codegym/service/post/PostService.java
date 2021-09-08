@@ -73,4 +73,14 @@ public class PostService implements IPostService {
         return postRepository.findMyPostByHashtag(userId,hashtagId);
     }
 
+    @Override
+    public Iterable<Post> findAllByHashtagIdAndOrderByUsername(Long id) {
+        return postRepository.findAllByHashtagIdAndOrderByUsername(id);
+    }
+
+    @Override
+    public Iterable<Post> findAllByHashtagIdAndOrderByTitle(Long id) {
+        return postRepository.findAllByHashtagIdAndOrderByTitle(id);
+    }
+
 }
