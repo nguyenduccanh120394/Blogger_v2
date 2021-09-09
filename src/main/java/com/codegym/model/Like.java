@@ -1,14 +1,19 @@
 package com.codegym.model;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 
 @Entity
+@Table(name = "Likes")
 public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
     @ManyToOne
     private Post post;
+    @NotNull
     @ManyToOne
     private User user;
 
