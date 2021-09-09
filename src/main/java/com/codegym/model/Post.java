@@ -24,10 +24,8 @@ public class Post {
     @NotNull
     @ManyToOne
     private Hashtag hashtag;
-
     public Post() {
     }
-
     public Post(Long id, String title, Date date, String content, String image, String description, String status, User user, Hashtag hashtag) {
         this.id = id;
         this.title = title;
