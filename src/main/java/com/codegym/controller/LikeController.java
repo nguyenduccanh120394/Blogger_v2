@@ -3,6 +3,7 @@ package com.codegym.controller;
 import com.codegym.model.Like;
 import com.codegym.model.Post;
 import com.codegym.service.like.ILikeService;
+import com.google.common.base.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,16 @@ public class LikeController {
         likeService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @GetMapping("/search/{idUser}/{idPost}")
-    public ResponseEntity<Like> findByUserA
-}
+ @GetMapping("/search/{idUser}/{idPost}")
+
+ public ResponseEntity<Iterable<Like>> findByUserIdAndIdPost(@PathVariable Long idUser,@PathVariable Long idPost){
+
+          return new ResponseEntity<>(likeService.findAllByIdUserAndIdPost(idUser,idPost),HttpStatus.OK);
+
+ }
+ @GetMapping("/search/top")
+    public ResponseEntity<Iterable<Like>> findTop(){
+        return new ResponseEntity<>(likeService.findtop(),HttpStatus.OK);
+ }
+ }
 
