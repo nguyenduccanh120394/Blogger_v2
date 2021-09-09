@@ -26,9 +26,11 @@ public class LikeController {
         return new ResponseEntity<>(likeService.save(like), HttpStatus.OK);
     }
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Post> delete(@PathVariable Long id) {
+    public ResponseEntity<Like> delete(@PathVariable Long id) {
         likeService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("/search/{idUser}/{idPost}")
+    public ResponseEntity<Like> findByUserA
 }
 
