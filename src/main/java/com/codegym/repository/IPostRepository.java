@@ -37,6 +37,12 @@ public interface IPostRepository extends PagingAndSortingRepository<Post, Long> 
     @Query("select p from Post p where p.hashtag.id =:id  and  p.status = 'public' order by p.user.username desc ")
     Iterable<Post>findAllByHashtagIdAndOrderByUsername(Long id);
 
+    @Query(value = "select * from post where post.date between :timeStart and   :timeEnd and post.status = 'public' ", nativeQuery = true)
+    Iterable<Post>findByDate(String timeStart, String timeEnd);
+
+
+
+
     @Query(value = "select title from post where user_id =:userId", nativeQuery = true)
     Iterable<String>findTitleById(Long userId);
 

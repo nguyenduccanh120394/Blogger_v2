@@ -103,5 +103,9 @@ public class PostController {
         return new ResponseEntity(errorMessage, HttpStatus.OK);
     }
 
-
+    @GetMapping("/search/times/{timeStart}/{timeEnd}")
+    public ResponseEntity<Iterable<Post>> getPostByTime(@PathVariable String timeStart, @PathVariable String timeEnd){
+        Iterable<Post> posts = postService.findByDate(timeStart,timeEnd);
+        return new ResponseEntity<>(posts,HttpStatus.OK);
+    }
 }
