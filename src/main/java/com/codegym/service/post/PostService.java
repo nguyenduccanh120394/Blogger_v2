@@ -83,4 +83,14 @@ public class PostService implements IPostService {
         return postRepository.findAllByHashtagIdAndOrderByTitle(id);
     }
 
+    @Override
+    public Iterable<Post> findByDate(String dateStart, String dateEnd) {
+        return postRepository.findByDate(dateStart, dateEnd);
+    }
+
+//    @Override
+//    public Iterable<Post> findByDateAndHashtag(String time, Long id) {
+//        return postRepository.findByDateAndHashtag(time,id);
+//    }
+
 }
