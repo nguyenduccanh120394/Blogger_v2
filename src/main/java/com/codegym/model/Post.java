@@ -18,6 +18,7 @@ public class Post {
     private String image;
     private String description;
     private String status;
+    private Integer comment_count = 0;
     @NotNull
     @ManyToOne
     private User user;
@@ -26,7 +27,7 @@ public class Post {
     private Hashtag hashtag;
     public Post() {
     }
-    public Post(Long id, String title, Date date, String content, String image, String description, String status, User user, Hashtag hashtag) {
+    public Post(Long id, String title, Date date, String content, String image, String description, String status, User user, Hashtag hashtag,Integer comment_count) {
         this.id = id;
         this.title = title;
         this.date = date;
@@ -36,6 +37,7 @@ public class Post {
         this.status = status;
         this.user = user;
         this.hashtag = hashtag;
+        this.comment_count = 0;
     }
 
     public Post(String title, Date date, String content, String image, String description, String status, User user, Hashtag hashtag) {
@@ -47,6 +49,7 @@ public class Post {
         this.status = status;
         this.user = user;
         this.hashtag = hashtag;
+        this.comment_count = 0;
     }
 
     public Post(String title, Date date, String content, String image, String description, String status, User user) {
@@ -57,18 +60,11 @@ public class Post {
         this.description = description;
         this.status = status;
         this.user = user;
+        this.comment_count = 0;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public Hashtag getHashtag() {
-        return hashtag;
-    }
-
-    public void setHashtag(Hashtag hashtag) {
-        this.hashtag = hashtag;
     }
 
     public void setId(Long id) {
@@ -123,11 +119,27 @@ public class Post {
         this.status = status;
     }
 
+    public Integer getComment_count() {
+        return comment_count;
+    }
+
+    public void setComment_count(Integer comment_count) {
+        this.comment_count = comment_count;
+    }
+
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Hashtag getHashtag() {
+        return hashtag;
+    }
+
+    public void setHashtag(Hashtag hashtag) {
+        this.hashtag = hashtag;
     }
 }

@@ -1,7 +1,9 @@
 package com.codegym.controller;
 
 
+import com.codegym.message.request.CommentPostCreate;
 import com.codegym.message.response.ResponseMessage;
+import com.codegym.model.CommentPost;
 import com.codegym.model.Post;
 import com.codegym.service.post.PostService;
 import com.codegym.service.post.commentpost.CommentPostService;
@@ -32,4 +34,22 @@ public ResponseEntity<?> getListCommentByIdPost(@PathVariable Long id){
     if(listcomment.isEmpty()) return new ResponseEntity<>(new ResponseMessage("khong co bai post"), HttpStatus.NOT_FOUND);
     return new ResponseEntity<>(listcomment,HttpStatus.OK);
 }
+    @PostMapping("/create/{id}")
+    public ResponseEntity<?> createComment(@PathVariable("id") Long id, @RequestBody CommentPostCreate commentPostCreate){
+        // kiem tra xem id bai post co ton tai hay khong
+        Optional<Post> post = postService.findById(id);
+        if(!post.isPresent())
+            return new ResponseEntity<>(new ResponseMessage("khong tim thay bai post"),HttpStatus.NOT_FOUND);
+        // neu tim thay thi tạo comment
+        CommentPost commentPost = CommentPost.build(commentPostCreate);
+//        commentPost.setPost(post.get());
+        commentPostService.save(commentPost);
+        commentPost.setPost(post.get());
+//        commentPost.setUser(commentPost.getUser());
+        post.get().setComment_count(post.get().getComment_count()+1);
+        postService.save(post.get());
+        // tang count
+
+        return new ResponseEntity<>(new ResponseMessage("create comment okie"), HttpStatus.OK);
+    }
 }

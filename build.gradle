@@ -18,7 +18,8 @@ dependencies {
 
     //Tomcat
     'org.springframework.boot:spring-boot-starter-tomcat'
-
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 //    jackson = '2.9.0'
     implementation "com.fasterxml.jackson.core:jackson-databind:"
 

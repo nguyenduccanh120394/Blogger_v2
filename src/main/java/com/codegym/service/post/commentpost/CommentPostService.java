@@ -23,7 +23,7 @@ public class CommentPostService implements ICommentPostSevice{
 
     @Override
     public CommentPost save(CommentPost commentPost) {
-        return null;
+        return commentPostRepository.save(commentPost);
     }
 
     @Override

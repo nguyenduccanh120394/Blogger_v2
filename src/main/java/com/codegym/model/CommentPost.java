@@ -1,5 +1,7 @@
 package com.codegym.model;
 
+import com.codegym.message.request.CommentPostCreate;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.Instant;
@@ -22,6 +24,12 @@ public class CommentPost {
     public CommentPost() {
     }
 
+    public CommentPost(String text, LocalDate createdDate ) {
+        this.text =text;
+        this.createdDate = createdDate;
+    }
+
+
     public Long getId() {
         return id;
     }
@@ -30,6 +38,12 @@ public class CommentPost {
         this.text = text;
         this.post = post;
         this.createdDate = createdDate;
+    }
+    public static CommentPost build(CommentPostCreate postCreate ){
+        return new CommentPost(
+                postCreate.getText(),
+                LocalDate.now()
+        );
     }
 
     public void setId(Long id) {
