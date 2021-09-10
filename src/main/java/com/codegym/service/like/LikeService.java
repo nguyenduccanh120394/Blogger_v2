@@ -38,4 +38,9 @@ public class LikeService implements ILikeService{
     public Iterable<Like> findtop() {
         return likeRepository.findtop();
     }
+
+    @Override
+    public Iterable<Like> findByIdPost(Long idPost) {
+        return likeRepository.findByIdPost(idPost);
+    }
 }
