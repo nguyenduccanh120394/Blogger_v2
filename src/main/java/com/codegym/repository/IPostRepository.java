@@ -19,7 +19,7 @@ public interface IPostRepository extends PagingAndSortingRepository<Post, Long> 
     @Query("select p from Post p where p.user.id =:id order by p.date desc ")
     Iterable<Post>findAllByIdUser(Long id);
 
-    @Query("select p from Post p where p.user.id =:id  and  p.status = 'public'")
+    @Query("select p from Post p where p.user.id =:id  and  p.status = 'public' order by p.date desc")
     Iterable<Post>findAllByIdUserOther(Long id);
 
     @Query("select p from Post p where p.hashtag.id =:id  and  p.status = 'public' order by p.date desc ")
@@ -42,4 +42,10 @@ public interface IPostRepository extends PagingAndSortingRepository<Post, Long> 
 
 
 
+
+    @Query(value = "select title from post where user_id =:userId", nativeQuery = true)
+    Iterable<String>findTitleById(Long userId);
+
+    @Query(value = "select * from post where user_id =:id and title like %:title% order by date desc ", nativeQuery = true)
+    Iterable<Post> findByAuthorTitle(Long id, String title);
 }

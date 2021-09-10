@@ -5,6 +5,7 @@ import com.codegym.service.post.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,6 +83,14 @@ public class PostController {
     public ResponseEntity<Iterable<Post>> findMyPostByTitle(@PathVariable Long id,@PathVariable String title) {
         title = "%" + title + "%";
         return new ResponseEntity<>(postService.findMyPostByTitle(id, title), HttpStatus.OK);
+    }
+    @GetMapping("search/author/{id}")
+    public ResponseEntity<Iterable<String>> findPostAuthor(@PathVariable Long id){
+        return new ResponseEntity<>(postService.findTitleAuthor(id), HttpStatus.OK);
+    }
+    @GetMapping("search/author/{id}/{title}")
+    public ResponseEntity<Iterable<Post>>findByAuthorTitle(@PathVariable Long id, @PathVariable String title){
+        return new ResponseEntity<>(postService.findByAuthorTitle(id, title),HttpStatus.OK);
     }
 
     @ExceptionHandler(BindException.class)
