@@ -13,12 +13,12 @@ public class CommentPostService implements ICommentPostSevice{
     ICommentPostRepository commentPostRepository;
     @Override
     public Iterable<CommentPost> findAll() {
-        return null;
+        return commentPostRepository.findAll();
     }
 
     @Override
     public Optional<CommentPost> findById(Long id) {
-        return Optional.empty();
+        return commentPostRepository.findById(id);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class CommentPostService implements ICommentPostSevice{
 
     @Override
     public void remove(Long id) {
-
+commentPostRepository.deleteById(id);
     }
     @Override
     public Iterable<CommentPost> getAllCommentByPost(Post post) {
