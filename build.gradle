@@ -13,6 +13,8 @@ repositories {
 }
 
 dependencies {
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.5.4'
+
     // https://mvnrepository.com/artifact/org.apache.httpcomponents/fluent-hc
     implementation group: 'org.apache.httpcomponents', name: 'fluent-hc', version: '4.5.13'
     // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient

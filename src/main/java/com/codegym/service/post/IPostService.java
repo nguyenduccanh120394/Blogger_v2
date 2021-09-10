@@ -18,5 +18,4 @@ public interface IPostService extends IGeneralService<Post> {
     Iterable<Post>findByAuthorTitle(Long id, String title);
     Iterable<Post>findByDate(String dateStart, String dateEnd);
 
-
 }
