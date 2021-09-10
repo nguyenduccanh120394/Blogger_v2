@@ -101,8 +101,7 @@ public ResponseEntity<?> getListCommentByIdPost(@PathVariable Long id){
         if(!post.isPresent())
             return new ResponseEntity<>(new ResponseMessage("khong tim thay bai post"),HttpStatus.NOT_FOUND);
 
-        if( user.getUsername().equals(post.get().getUser().getUsername())
-                ||user.getUsername().equals(commentPost.get().getUser().getUsername())){
+        if( user.getUsername().equals(commentPost.get().getUser().getUsername())){
             // dung roi thi xoa
             commentPostService.remove(id);
 
