@@ -19,7 +19,7 @@ public interface IPostRepository extends PagingAndSortingRepository<Post, Long> 
     @Query("select p from Post p where p.user.id =:id order by p.date desc ")
     Iterable<Post>findAllByIdUser(Long id);
 
-    @Query("select p from Post p where p.user.id =:id  and  p.status = 'public'")
+    @Query("select p from Post p where p.user.id =:id  and  p.status = 'public' order by p.date desc")
     Iterable<Post>findAllByIdUserOther(Long id);
 
     @Query("select p from Post p where p.hashtag.id =:id  and  p.status = 'public' order by p.date desc ")
