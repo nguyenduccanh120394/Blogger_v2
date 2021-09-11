@@ -28,6 +28,16 @@ public class PostController {
         return new ResponseEntity<>(postService.findAllByStatus(), HttpStatus.OK);
     }
 
+    @GetMapping("/lock")
+    public ResponseEntity<Iterable<Post>> findAllByStatusLock() {
+        return new ResponseEntity<>(postService.findAllByStatusLock(), HttpStatus.OK);
+    }
+
+    @GetMapping("/public/lock")
+    public ResponseEntity<Iterable<Post>> findAllByStatusOfAdmin() {
+        return new ResponseEntity<>(postService.findAllByStatusOfAdmin(), HttpStatus.OK);
+    }
+
     // tìm post của user khác chỉ trả về public
     @GetMapping("/search/user/{id}")
     public ResponseEntity<Iterable<Post>> findAllByOtherUser(@PathVariable Long id) {

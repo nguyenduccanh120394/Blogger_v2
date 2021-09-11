@@ -50,5 +50,9 @@ public class AdminController {
         Iterable<User> user = userService.findUsersByNameContaining(name);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
-
+    @GetMapping("/top")
+    public ResponseEntity<Iterable<User>>findByTopUserByPost(){
+        Iterable<User> users = userService.findByTopUser();
+        return new ResponseEntity<>(users,HttpStatus.OK);
+    }
 }

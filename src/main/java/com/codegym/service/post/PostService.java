@@ -88,6 +88,16 @@ public class PostService implements IPostService {
         return postRepository.findByDate(dateStart, dateEnd);
     }
 
+    @Override
+    public Iterable<Post> findAllByStatusOfAdmin() {
+        return postRepository.findAllByStatusOfAdmin();
+    }
+
+    @Override
+    public Iterable<Post> findAllByStatusLock() {
+        return postRepository.findAllByStatusLock();
+    }
+
 //    @Override
 //    public Iterable<Post> findByDateAndHashtag(String time, Long id) {
 //        return postRepository.findByDateAndHashtag(time,id);
