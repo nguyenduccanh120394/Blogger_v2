@@ -6,4 +6,5 @@ import lombok.Data;
 @Data
 public class CommentPostCreate {
     private String text;
+    private String id;
 }

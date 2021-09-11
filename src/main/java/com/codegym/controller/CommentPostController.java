@@ -9,6 +9,7 @@ import com.codegym.model.User;
 import com.codegym.security.service.UserDetailsServiceImpl;
 import com.codegym.service.post.PostService;
 import com.codegym.service.post.commentpost.CommentPostService;
+import com.codegym.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,8 @@ public class CommentPostController {
     CommentPostService commentPostService;
 @Autowired
 UserDetailsServiceImpl userDetailsService;
-
+@Autowired
+    UserService userService;
     // lay list comment theo id bai post
 @GetMapping("/{id}")
 public ResponseEntity<?> getListCommentByIdPost(@PathVariable Long id){
@@ -44,7 +46,7 @@ public ResponseEntity<?> getListCommentByIdPost(@PathVariable Long id){
     @PostMapping("/create/{id}")
     public ResponseEntity<?> createComment(@PathVariable("id") Long id, @RequestBody CommentPostCreate commentPostCreate){
         // lay user hien tai
-        User user = userDetailsService.getCurrentUser();
+        User user = userService.findById(Long.valueOf(commentPostCreate.getId())).get();
         // kiem tra xem id bai post co ton tai hay khong
 
         Optional<Post> post = postService.findById(id);
@@ -91,7 +93,7 @@ public ResponseEntity<?> getListCommentByIdPost(@PathVariable Long id){
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteComment(@PathVariable("id") Long id) {
 
-        User user =userDetailsService.getCurrentUser();
+//        User user =userDetailsService.getCurrentUser();
 
         Optional<CommentPost> commentPost = commentPostService.findById(id);
         if(!commentPost.isPresent())
@@ -101,7 +103,7 @@ public ResponseEntity<?> getListCommentByIdPost(@PathVariable Long id){
         if(!post.isPresent())
             return new ResponseEntity<>(new ResponseMessage("khong tim thay bai post"),HttpStatus.NOT_FOUND);
 
-        if( user.getUsername().equals(commentPost.get().getUser().getUsername())){
+//        if( user.getUsername().equals(commentPost.get().getUser().getUsername())){
             // dung roi thi xoa
             commentPostService.remove(id);
 
@@ -111,8 +113,8 @@ public ResponseEntity<?> getListCommentByIdPost(@PathVariable Long id){
                 post.get().setComment_count(0);
             postService.save(post.get());
             return new ResponseEntity<>(new ResponseMessage("delete comment done"),HttpStatus.OK);
-        }
+//        }
 
-        return new ResponseEntity<>(new ResponseMessage("khong co quyen xoa"),HttpStatus.FORBIDDEN);
+//        return new ResponseEntity<>(new ResponseMessage("khong co quyen xoa"),HttpStatus.FORBIDDEN);
     }
 }
