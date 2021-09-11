@@ -48,7 +48,6 @@ public ResponseEntity<?> getListCommentByIdPost(@PathVariable Long id){
         // lay user hien tai
         User user = userService.findById(Long.valueOf(commentPostCreate.getId())).get();
         // kiem tra xem id bai post co ton tai hay khong
-
         Optional<Post> post = postService.findById(id);
         if(!post.isPresent())
             return new ResponseEntity<>(new ResponseMessage("khong tim thay bai post"),HttpStatus.NOT_FOUND);
