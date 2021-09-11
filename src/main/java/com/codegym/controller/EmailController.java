@@ -16,16 +16,16 @@ import javax.mail.internet.MimeMessage;
 
 @RestController
 @CrossOrigin("*")
-public class emailController {
+public class EmailController {
     @Autowired
     private JavaMailSender javaMailSender;
 
     @GetMapping("/api/email/{id}/{email}")
     public void sendEmail(@PathVariable Long id, @PathVariable String email) throws MessagingException {
-        String subject = "Register notification";
+        String subject = "Title";
         String senderName = "admin";
         String mailContent = "<a href='http://localhost:4200/post/view/"+id+"'>Dear thanh,</a>";
-        mailContent += "<p> Bạn đã đăng ký thành công </p>";
+        mailContent += "<p>  </p>";
 
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
