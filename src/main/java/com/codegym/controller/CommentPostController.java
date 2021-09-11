@@ -36,7 +36,7 @@ UserDetailsServiceImpl userDetailsService;
 @GetMapping("/{id}")
 public ResponseEntity<?> getListCommentByIdPost(@PathVariable Long id){
     //Lấy user hiện tại ra
-    User user = userDetailsService.getCurrentUser();
+//    User user = userService.findById(Long.valueOf(Post.getId())).get();
     //get list post ra
     Optional<Post> post = postService.findById(id);
     List listcomment = (List) commentPostService.getAllCommentByPost(post.get());
@@ -68,8 +68,8 @@ public ResponseEntity<?> getListCommentByIdPost(@PathVariable Long id){
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateComment(@PathVariable("id") Long id, @RequestBody CommentPostCreate commentPostCreate){
         // lay user hien tai
-        User user = userDetailsService.getCurrentUser();
-
+//        User user = userDetailsService.getCurrentUser();
+        User user = userService.findById(Long.valueOf(commentPostCreate.getId())).get();
         // kiem tra comment co ton tai hay khong
 
         Optional<CommentPost> commentPost = commentPostService.findById(id);
@@ -92,13 +92,10 @@ public ResponseEntity<?> getListCommentByIdPost(@PathVariable Long id){
     }// Xóa comment theo user comment hoac chu bai post
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteComment(@PathVariable("id") Long id) {
-
 //        User user =userDetailsService.getCurrentUser();
-
         Optional<CommentPost> commentPost = commentPostService.findById(id);
         if(!commentPost.isPresent())
             return new ResponseEntity<>(new ResponseMessage("khong tim thay comment "),HttpStatus.NOT_FOUND);
-
         Optional<Post> post = postService.findById(commentPost.get().getPost().getId());
         if(!post.isPresent())
             return new ResponseEntity<>(new ResponseMessage("khong tim thay bai post"),HttpStatus.NOT_FOUND);
