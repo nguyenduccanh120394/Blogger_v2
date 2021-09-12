@@ -50,5 +50,10 @@ public class UserService implements IUserService{
         return userRepository.findByUsernameContaining(user_name);
     }
 
+    @Override
+    public Iterable<User> findByTopUser() {
+        return userRepository.findByTopUser();
+    }
+
 
 }

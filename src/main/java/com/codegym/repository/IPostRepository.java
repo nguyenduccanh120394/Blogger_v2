@@ -11,6 +11,12 @@ public interface IPostRepository extends PagingAndSortingRepository<Post, Long> 
     @Query("select p from Post p where p.status = 'public' order by p.date desc")
     Iterable<Post>findAllByStatus();
 
+    @Query("select p from Post p where p.status = 'lock' order by p.date desc")
+    Iterable<Post>findAllByStatusLock();
+
+    @Query("select p from Post p where p.status = 'public' or p.status = 'lock' order by p.date desc")
+    Iterable<Post>findAllByStatusOfAdmin();
+
     Iterable<Post>findAllByTitleContaining(String title);
 
     @Query(value = "select * from post where post.user_id =:id and post.title like  :title order by post.date desc ", nativeQuery = true)
@@ -40,12 +46,11 @@ public interface IPostRepository extends PagingAndSortingRepository<Post, Long> 
     @Query(value = "select * from post where post.date between :timeStart and   :timeEnd and post.status = 'public' ", nativeQuery = true)
     Iterable<Post>findByDate(String timeStart, String timeEnd);
 
-
-
-
     @Query(value = "select title from post where user_id =:userId", nativeQuery = true)
     Iterable<String>findTitleById(Long userId);
 
     @Query(value = "select * from post where user_id =:id and title like %:title% order by date desc ", nativeQuery = true)
     Iterable<Post> findByAuthorTitle(Long id, String title);
+
+
 }
