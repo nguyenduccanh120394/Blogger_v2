@@ -92,7 +92,11 @@ public class User {
         this.password = password;
     }
 
+    public User(String name, String username, String email, String encode, String phone) {
+    }
+
     public User() {
+
     }
 
     public Long getId() {
