@@ -24,7 +24,7 @@ public class EmailController {
     public void sendEmail(@PathVariable Long id, @PathVariable String email) throws MessagingException {
         String subject = "Title";
         String senderName = "admin";
-        String mailContent = "<a href='http://localhost:4200/post/view/"+id+"'>Dear thanh,</a>";
+        String mailContent = "<a href='http://localhost:4200/post/view/"+id+"'>Dear qq,</a>";
         mailContent += "<p>  </p>";
 
         MimeMessage message = javaMailSender.createMimeMessage();

@@ -1,5 +1,8 @@
 package com.codegym.model;
 
+import com.codegym.service.hashtag.HashtagService;
+import com.codegym.service.post.PostService;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
