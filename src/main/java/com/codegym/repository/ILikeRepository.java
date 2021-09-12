@@ -15,4 +15,5 @@ public interface ILikeRepository extends JpaRepository<Like,Long> {
     Iterable<Like> findtop();
 @Query("select p from Like p where p.post.id =:idPost")
     Iterable<Like> findByIdPost(Long idPost);
+
 }
