@@ -24,8 +24,13 @@ public class LikeController {
         return new ResponseEntity<>(likeService.findAll(),HttpStatus.OK);
     }
     @PostMapping("/create")
-    public ResponseEntity<Like> create(@RequestBody Like like) {
-        return new ResponseEntity<>(likeService.save(like), HttpStatus.OK);
+    public ResponseEntity<Void> create(@RequestBody Like like) {
+        if(likeService.findByUser(like.getUser().getId()) ==false){
+
+            return new ResponseEntity<>(HttpStatus.FAILED_DEPENDENCY);
+        }
+        likeService.save(like);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Like> delete(@PathVariable Long id) {
@@ -47,5 +52,6 @@ public class LikeController {
     public ResponseEntity<Iterable<Like>> findByIdPost(@PathVariable Long idPost){
         return new ResponseEntity<>(likeService.findByIdPost(idPost),HttpStatus.OK);
  }
+
  }
 

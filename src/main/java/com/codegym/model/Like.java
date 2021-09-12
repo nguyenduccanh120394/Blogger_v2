@@ -22,8 +22,15 @@ public class Like {
         this.post = post;
         this.user = user;
     }
-    public Like(){
+
+    public Like() {
     }
+
+    public Like(Post post, User user) {
+        this.post = post;
+        this.user = user;
+    }
+
 
     public Long getId() {
         return id;
