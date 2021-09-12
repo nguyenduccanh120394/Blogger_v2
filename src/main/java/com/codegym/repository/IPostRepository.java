@@ -52,5 +52,7 @@ public interface IPostRepository extends PagingAndSortingRepository<Post, Long> 
     @Query(value = "select * from post where user_id =:id and title like %:title% order by date desc ", nativeQuery = true)
     Iterable<Post> findByAuthorTitle(Long id, String title);
 
+    @Query(value = "select * from post where post.status = 'public' and post.comment_count > 0 order by post.comment_count desc limit 5", nativeQuery = true)
+    Iterable<Post>findTopCommentOfPost();
 
 }

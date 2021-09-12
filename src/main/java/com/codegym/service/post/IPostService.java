@@ -19,6 +19,7 @@ public interface IPostService extends IGeneralService<Post> {
     Iterable<Post>findByDate(String dateStart, String dateEnd);
     Iterable<Post>findAllByStatusOfAdmin();
     Iterable<Post>findAllByStatusLock();
+    Iterable<Post>findTopCommentOfPost();
 
 
 

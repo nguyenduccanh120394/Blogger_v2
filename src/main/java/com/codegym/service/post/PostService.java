@@ -98,6 +98,11 @@ public class PostService implements IPostService {
         return postRepository.findAllByStatusLock();
     }
 
+    @Override
+    public Iterable<Post> findTopCommentOfPost() {
+        return postRepository.findTopCommentOfPost();
+    }
+
 //    @Override
 //    public Iterable<Post> findByDateAndHashtag(String time, Long id) {
 //        return postRepository.findByDateAndHashtag(time,id);

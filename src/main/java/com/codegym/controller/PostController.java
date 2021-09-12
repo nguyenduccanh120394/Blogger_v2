@@ -129,4 +129,11 @@ public class PostController {
         Iterable<Post> posts = postService.findByDate(timeStart,timeEnd);
         return new ResponseEntity<>(posts,HttpStatus.OK);
     }
+
+    @GetMapping("/comments/top")
+    public ResponseEntity<Iterable<Post>> getTopComment(){
+        Iterable<Post>posts = postService.findTopCommentOfPost();
+        return new ResponseEntity<>(posts,HttpStatus.OK);
+    }
+
 }

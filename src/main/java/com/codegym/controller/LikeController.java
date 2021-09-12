@@ -25,7 +25,7 @@ public class LikeController {
     }
     @PostMapping("/create")
     public ResponseEntity<Void> create(@RequestBody Like like) {
-        if(likeService.findByUser(like.getUser().getId()) ==false){
+        if(likeService.findByUser(like.getUser().getId(),like.getPost().getId()) == false){
 
             return new ResponseEntity<>(HttpStatus.FAILED_DEPENDENCY);
         }
@@ -52,6 +52,10 @@ public class LikeController {
     public ResponseEntity<Iterable<Like>> findByIdPost(@PathVariable Long idPost){
         return new ResponseEntity<>(likeService.findByIdPost(idPost),HttpStatus.OK);
  }
+    @GetMapping("/search/top5")
+    public ResponseEntity<Iterable<Like>> findTop5(){
+        return new ResponseEntity<>(likeService.findTop5(),HttpStatus.OK);
+    }
 
  }
 

@@ -51,15 +51,20 @@ public class LikeService implements ILikeService {
     }
 
     @Override
-    public Boolean findByUser(Long idUser) {
+    public Boolean findByUser(Long idUser, Long idPost) {
         boolean a = true;
         List<Like> likes = likeRepository.findAll();
         for (int i = 0; i < likes.size(); i++) {
-            if (likes.get(i).getUser().getId() == idUser) {
+            if (likes.get(i).getUser().getId() == idUser && likes.get(i).getPost().getId() == idPost) {
                 a = false;
             }
         }
         return a;
+    }
+
+    @Override
+    public Iterable<Like> findTop5() {
+        return likeRepository.findTop5();
     }
 
 }

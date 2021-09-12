@@ -28,4 +28,9 @@ public class HashtagService implements IHashtagService{
     public void remove(Long id) {
         hashtagRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<Hashtag> findTopHashtagByPost() {
+        return hashtagRepository.findTopHashtagByPost();
+    }
 }
