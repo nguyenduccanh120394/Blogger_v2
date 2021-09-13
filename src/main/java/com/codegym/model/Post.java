@@ -1,5 +1,8 @@
 package com.codegym.model;
 
+import com.codegym.service.like.LikeService;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -7,6 +10,7 @@ import java.util.Date;
 
 @Entity
 public class Post {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,6 +28,8 @@ public class Post {
     @NotNull
     @ManyToOne
     private Hashtag hashtag;
+    private int count = 0;
+
 
     public Post() {
     }
@@ -59,6 +65,27 @@ public class Post {
         this.description = description;
         this.status = status;
         this.user = user;
+    }
+
+    public Post(Long id, String title, Date date, String content, String image, String description, String status, User user, Hashtag hashtag, int count) {
+        this.id = id;
+        this.title = title;
+        this.date = date;
+        this.content = content;
+        this.image = image;
+        this.description = description;
+        this.status = status;
+        this.user = user;
+        this.hashtag = hashtag;
+        this.count = count;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public Long getId() {
