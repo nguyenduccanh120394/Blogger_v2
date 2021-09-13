@@ -1,7 +1,6 @@
 package com.codegym.service.like;
 
 import com.codegym.model.Like;
-import com.codegym.model.User;
 import com.codegym.repository.ILikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,8 +35,8 @@ public class LikeService implements ILikeService {
     }
 
     @Override
-    public Iterable<Like> findAllByIdUserAndIdPost(Long idUser, Long idPost) {
-        return likeRepository.findAllByIdUserAndIdPost(idUser, idPost);
+    public Optional<Like> findByIdUserAndIdPost(Long idUser, Long idPost) {
+        return likeRepository.findByIdUserAndIdPost(idUser, idPost);
     }
 
     @Override
@@ -46,7 +45,7 @@ public class LikeService implements ILikeService {
     }
 
     @Override
-    public Iterable<Like> findByIdPost(Long idPost) {
+    public List<Like> findByIdPost(Long idPost) {
         return likeRepository.findByIdPost(idPost);
     }
 
@@ -55,12 +54,14 @@ public class LikeService implements ILikeService {
         boolean a = true;
         List<Like> likes = likeRepository.findAll();
         for (int i = 0; i < likes.size(); i++) {
-            if (likes.get(i).getUser().getId() == idUser && likes.get(i).getPost().getId() == idPost) {
+            if (likes.get(i).getUser().getId() == idUser && likes.get(i).getPost().getId() == idPost ) {
                 a = false;
             }
         }
         return a;
     }
+
+
 
     @Override
     public Iterable<Like> findTop5() {
