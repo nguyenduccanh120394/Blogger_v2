@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import com.codegym.service.user.*;
 import javax.validation.Valid;
+import com.codegym.message.request.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -64,6 +65,23 @@ public class AuthRestAPIs {
                 userDetails.getId() , userDetails.getName(), userDetails.getEmail(), userDetails.getAvatar() ,
                 userDetails.getAuthorities()
         ));
+    }
+
+    @PostMapping("/password")
+    public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordForm changePasswordForm){
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(changePasswordForm.getUsername(),changePasswordForm.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtProvider.generateJwtToken(authentication);
+        UserPrinciple userDetails = (UserPrinciple) authentication.getPrincipal();
+        User user = new User(userDetails.getId(),userDetails.getName(),userDetails.getUsername(),userDetails.getEmail()
+                ,passwordEncoder.encode(changePasswordForm.getNewPassword())
+                ,changePasswordForm.getRoles(),userDetails.getAvatar(),changePasswordForm.getPhone(),changePasswordForm.getAddress(),
+                changePasswordForm.getStatus(),changePasswordForm.getTimeCreated());
+        userService.save(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/signup")
