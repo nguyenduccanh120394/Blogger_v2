@@ -4,13 +4,15 @@ import com.codegym.service.hashtag.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.codegym.repository.*;
+
+import java.util.List;
 import java.util.Optional;
 @Service
 public class HashtagService implements IHashtagService{
     @Autowired
     private IHashtagRepository hashtagRepository;
     @Override
-    public Iterable<Hashtag> findAll() {
+    public List<Hashtag> findAll() {
         return hashtagRepository.findAll();
     }
 
