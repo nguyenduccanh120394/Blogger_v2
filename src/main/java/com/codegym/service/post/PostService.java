@@ -73,5 +73,44 @@ public class PostService implements IPostService {
         return postRepository.findMyPostByHashtag(userId,hashtagId);
     }
 
+    @Override
+    public Iterable<Post> findAllByHashtagIdAndOrderByUsername(Long id) {
+        return postRepository.findAllByHashtagIdAndOrderByUsername(id);
+    }
+
+    @Override
+    public Iterable<Post> findAllByHashtagIdAndOrderByTitle(Long id) {
+        return postRepository.findAllByHashtagIdAndOrderByTitle(id);
+    }
+
+    @Override
+    public Iterable<Post> findByDate(String dateStart, String dateEnd) {
+        return postRepository.findByDate(dateStart, dateEnd);
+    }
+
+    @Override
+    public Iterable<Post> findAllByStatusOfAdmin() {
+        return postRepository.findAllByStatusOfAdmin();
+    }
+
+    @Override
+    public Iterable<Post> findAllByStatusLock() {
+        return postRepository.findAllByStatusLock();
+    }
+
+//    @Override
+//    public Iterable<Post> findByDateAndHashtag(String time, Long id) {
+//        return postRepository.findByDateAndHashtag(time,id);
+//    }
+
+    @Override
+    public Iterable<String> findTitleAuthor(Long id) {
+        return postRepository.findTitleById(id);
+    }
+
+    @Override
+    public Iterable<Post> findByAuthorTitle(Long id, String title) {
+        return postRepository.findByAuthorTitle(id, title);
+    }
 
 }

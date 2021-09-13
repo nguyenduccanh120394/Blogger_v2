@@ -47,7 +47,12 @@ public class UserService implements IUserService{
 
     @Override
     public Iterable<User> findUsersByNameContaining(String user_name) {
-        return userRepository.findUsersByNameContaining(user_name);
+        return userRepository.findByUsernameContaining(user_name);
+    }
+
+    @Override
+    public Iterable<User> findByTopUser() {
+        return userRepository.findByTopUser();
     }
 
 

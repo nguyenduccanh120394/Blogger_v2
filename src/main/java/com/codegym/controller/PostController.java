@@ -1,14 +1,18 @@
 package com.codegym.controller;
 
+import com.codegym.message.response.ResponseMessage;
 import com.codegym.model.Post;
 import com.codegym.service.post.IPostService;
+import com.codegym.service.post.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -27,6 +31,16 @@ public class PostController {
         return new ResponseEntity<>(postService.findAllByStatus(), HttpStatus.OK);
     }
 
+    @GetMapping("/lock")
+    public ResponseEntity<Iterable<Post>> findAllByStatusLock() {
+        return new ResponseEntity<>(postService.findAllByStatusLock(), HttpStatus.OK);
+    }
+
+    @GetMapping("/public/lock")
+    public ResponseEntity<Iterable<Post>> findAllByStatusOfAdmin() {
+        return new ResponseEntity<>(postService.findAllByStatusOfAdmin(), HttpStatus.OK);
+    }
+
     // tìm post của user khác chỉ trả về public
     @GetMapping("/search/user/{id}")
     public ResponseEntity<Iterable<Post>> findAllByOtherUser(@PathVariable Long id) {
@@ -39,14 +53,22 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Post> get(@PathVariable Long id) {
-        return new ResponseEntity<>(postService.findById(id).get(), HttpStatus.OK);
+    public ResponseEntity<?> get(@PathVariable Long id) {
+        Optional<Post> post = postService.findById(id);
+        if (!post.isPresent()){
+            return new ResponseEntity<>(new ResponseMessage("Không tìm thấy bài post"),HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Post> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        Optional<Post> post = postService.findById(id);
+        if (!post.isPresent()){
+            return new ResponseEntity<>(new ResponseMessage("Không tìm thấy bài post"),HttpStatus.NOT_FOUND);
+        }
         postService.remove(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseMessage("delete done"),HttpStatus.OK);
     }
 
     @PutMapping("/edit")
@@ -83,6 +105,14 @@ public class PostController {
         title = "%" + title + "%";
         return new ResponseEntity<>(postService.findMyPostByTitle(id, title), HttpStatus.OK);
     }
+    @GetMapping("search/author/{id}")
+    public ResponseEntity<Iterable<String>> findPostAuthor(@PathVariable Long id){
+        return new ResponseEntity<>(postService.findTitleAuthor(id), HttpStatus.OK);
+    }
+    @GetMapping("search/author/{id}/{title}")
+    public ResponseEntity<Iterable<Post>>findByAuthorTitle(@PathVariable Long id, @PathVariable String title){
+        return new ResponseEntity<>(postService.findByAuthorTitle(id, title),HttpStatus.OK);
+    }
 
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)  // Nếu validate fail thì trả về 400
@@ -92,5 +122,11 @@ public class PostController {
         if (e.getBindingResult().hasErrors())
             e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
         return new ResponseEntity(errorMessage, HttpStatus.OK);
+    }
+
+    @GetMapping("/search/times/{timeStart}/{timeEnd}")
+    public ResponseEntity<Iterable<Post>> getPostByTime(@PathVariable String timeStart, @PathVariable String timeEnd){
+        Iterable<Post> posts = postService.findByDate(timeStart,timeEnd);
+        return new ResponseEntity<>(posts,HttpStatus.OK);
     }
 }

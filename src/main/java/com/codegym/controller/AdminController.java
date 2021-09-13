@@ -24,8 +24,9 @@ public class AdminController {
         Optional<User> user = userService.findById(id);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<User> edit(@PathVariable Long id, @RequestBody User user){
+    public ResponseEntity<?> edit(@PathVariable Long id, @RequestBody User user){
         Optional<User>currentUser = userService.findById(id);
         if (!currentUser.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -34,6 +35,7 @@ public class AdminController {
         userService.save(user);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Optional<User>>delete(@PathVariable Long id){
         Optional<User>user = userService.findById(id);
@@ -43,6 +45,14 @@ public class AdminController {
         userService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
+    @GetMapping ("/search/{name}")
+    public ResponseEntity<Iterable<User>>searchByUsername(@PathVariable String name){
+        Iterable<User> user = userService.findUsersByNameContaining(name);
+        return new ResponseEntity<>(user,HttpStatus.OK);
+    }
+    @GetMapping("/top")
+    public ResponseEntity<Iterable<User>>findByTopUserByPost(){
+        Iterable<User> users = userService.findByTopUser();
+        return new ResponseEntity<>(users,HttpStatus.OK);
+    }
 }
