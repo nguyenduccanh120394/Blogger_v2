@@ -16,7 +16,7 @@ public class AdminController {
     private UserService userService;
     @GetMapping("")
     public ResponseEntity<Iterable<User>> listUser(){
-        Iterable<User> users = userService.findAll();
+        Iterable<User> users = userService.findAllOfAdmin();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
     @GetMapping("/{id}")

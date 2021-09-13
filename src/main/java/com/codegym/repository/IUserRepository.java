@@ -14,6 +14,9 @@ public interface IUserRepository extends JpaRepository<User,Long> {
     Boolean existsByUsername(String username);
     Iterable<User> findByUsernameContaining(String user_name);
 
+    @Query(value = "select * from  (user , roles) join user_roles on user.id = user_roles.user_id and roles.id = user_roles.role_id where roles.name = 'USER'",nativeQuery = true)
+    Iterable<User> findAllOfAdmin();
+
     @Query(value = "select * from user join post on user.id = post.user_id group by user.id order by count(post.id) desc limit 5", nativeQuery = true)
     Iterable<User> findByTopUser();
 }

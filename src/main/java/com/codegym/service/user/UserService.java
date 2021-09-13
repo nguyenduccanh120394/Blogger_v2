@@ -55,5 +55,10 @@ public class UserService implements IUserService{
         return userRepository.findByTopUser();
     }
 
+    @Override
+    public Iterable<User> findAllOfAdmin() {
+        return userRepository.findAllOfAdmin();
+    }
+
 
 }

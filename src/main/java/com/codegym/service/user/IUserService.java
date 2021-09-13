@@ -12,6 +12,8 @@ public interface IUserService extends IGeneralService<User>{
     Boolean existsByUsername(String username);
     Iterable<User> findUsersByNameContaining(String user_name);
     Iterable<User> findByTopUser();
+    Iterable<User> findAllOfAdmin();
+
 
 
 }
