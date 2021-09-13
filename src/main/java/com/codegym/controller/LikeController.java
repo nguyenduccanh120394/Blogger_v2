@@ -2,9 +2,11 @@ package com.codegym.controller;
 
 import com.codegym.model.Like;
 import com.codegym.model.Post;
+import com.codegym.model.User;
 import com.codegym.service.like.ILikeService;
 import com.codegym.service.like.LikeService;
 import com.codegym.service.post.IPostService;
+import com.codegym.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,30 +23,14 @@ public class LikeController {
     private ILikeService likeService;
     @Autowired
     private IPostService postService;
-
+@Autowired
+private UserService userService;
     @GetMapping()
     public ResponseEntity<Iterable<Like>> findAll() {
         return new ResponseEntity<>(likeService.findAll(), HttpStatus.OK);
     }
 
-    @PostMapping("/create/{id}")
-    public ResponseEntity<?> create(@RequestBody Like like, @PathVariable Long id) {
-        Optional<Post> postOptional = postService.findById(id);
-        if (!postOptional.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        if (likeService.findByUser(like.getUser().getId(), like.getPost().getId()) == false) {
-            likeService.remove(likeService.findByIdUserAndIdPost(like.getUser().getId(),like.getPost().getId()).get().getId());
-            postOptional.get().setCount(postOptional.get().getCount() - 1);
-            postService.save(postOptional.get());
-            return new ResponseEntity<>(HttpStatus.FAILED_DEPENDENCY);
-        } else {
-            likeService.save(like);
-            postOptional.get().setCount(postOptional.get().getCount() + 1);
-            postService.save(postOptional.get());
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-    }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Like> delete(@PathVariable Long id) {

@@ -1,9 +1,12 @@
 package com.codegym.service.like;
 
 import com.codegym.model.Like;
+import com.codegym.model.Post;
+import com.codegym.model.User;
 import com.codegym.repository.ILikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
@@ -67,5 +70,11 @@ public class LikeService implements ILikeService {
     public Iterable<Like> findTop5() {
         return likeRepository.findTop5();
     }
+
+    @Override
+    public Optional<Like> findByUserAndPost(User user, Post post) {
+        return likeRepository.findByUserAndPost(user,post);
+    }
+
 
 }

@@ -1,6 +1,8 @@
 package com.codegym.repository;
 
 import com.codegym.model.Like;
+import com.codegym.model.Post;
+import com.codegym.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -10,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface ILikeRepository extends JpaRepository<Like, Long> {
-
+    Optional<Like> findByUserAndPost(User user, Post post);
 
     @Query("select l from Like l where l.user.id =:idUser and l.post.id =:idPost")
     Optional<Like> findByIdUserAndIdPost(Long idUser, Long idPost);

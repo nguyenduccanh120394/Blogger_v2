@@ -31,6 +31,11 @@ public class Like {
         this.user = user;
     }
 
+    public Like(User user, Post post) {
+        this.user=user;
+        this.post=post;
+    }
+
 
     public Long getId() {
         return id;
