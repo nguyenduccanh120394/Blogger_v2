@@ -29,6 +29,7 @@ public class Post {
     @ManyToOne
     private Hashtag hashtag;
 
+
     public Post() {
     }
     public Post(Long id, String title, Date date, String content, String image, String description, String status, User user, Hashtag hashtag,Integer comment_count) {
